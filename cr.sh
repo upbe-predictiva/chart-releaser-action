@@ -160,6 +160,7 @@ parse_command_line() {
             -i|--disable-index)
                 index=true
                 shift
+                ;;
             *)
                 break
                 ;;
