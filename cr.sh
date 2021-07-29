@@ -31,6 +31,7 @@ Usage: $(basename "$0") <options>
     -u, --charts-repo-url    The GitHub Pages URL to the charts repo (default: https://<owner>.github.io/<repo>)
     -o, --owner              The repo owner
     -r, --repo               The repo name
+    -i, --disable-index      Use this flag to 
 EOF
 }
 
@@ -41,6 +42,7 @@ main() {
     local owner=
     local repo=
     local charts_repo_url=
+    local index=
 
     parse_command_line "$@"
 
@@ -76,7 +78,11 @@ main() {
         done
 
         release_charts
-        update_index
+        if [ $index = false ] ; then
+            echo "Skipping index upload to GitHub Pages."
+        else
+            update_index
+        fi
     else
         echo "Nothing to do. No chart changes detected."
     fi
@@ -151,6 +157,9 @@ parse_command_line() {
                     exit 1
                 fi
                 ;;
+            -i|--disable-index)
+                index=true
+                shift
             *)
                 break
                 ;;
@@ -174,6 +183,11 @@ parse_command_line() {
     if [[ -z "$charts_repo_url" ]]; then
         charts_repo_url="https://$owner.github.io/$repo"
     fi
+
+    if [[ -z "$index" ]]; then
+        index=false
+    fi
+
 }
 
 install_chart_releaser() {

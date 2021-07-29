@@ -74,6 +74,7 @@ It does this – during every push to `main` – by checking each chart in your 
     charts_dir: charts
     config: cr.yaml
     charts_repo_url: xxxxxx
+    disable_index: {} # Disable Chart Index file upload to GitHub Pages
   env:
     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```

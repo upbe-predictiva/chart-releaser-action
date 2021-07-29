@@ -36,5 +36,9 @@ runs:
             args+=(--charts-repo-url "${{ inputs.charts_repo_url }}")
         fi
 
+        if [[ -n "${{ inputs.disable_index }}" ]]; then
+            args+=(--disable-index)
+        fi
+
         "$GITHUB_ACTION_PATH/cr.sh" "${args[@]}"
       shell: bash
